@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  aliastron-web:
+    image: nginx:alpine
+    container_name: aliastron-web
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    networks:
+      - aliastron-network
+
+networks:
+  aliastron-network:
+    driver: bridge
