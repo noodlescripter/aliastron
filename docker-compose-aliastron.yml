@@ -1,13 +1,12 @@
 version: '3.8'
-
 services:
-  arch-btw-aliastron-web:
+  arch-btw-web:
     image: nginx:latest
-    container_name: aliastron-web
+    container_name: arch-btw-aliastron-web
     ports:
-      - "4300:80"
+      - "5001:80"
     volumes:
-      - ./aliastron.html:/app/index.html:ro
+      - ./aliastron.html:/usr/share/nginx/html/index.html:ro
     restart: unless-stopped
     networks:
       - site-lively-frontend-network

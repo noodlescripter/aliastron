@@ -1,13 +1,12 @@
 version: '3.8'
-
 services:
   arch-btw-web:
     image: nginx:latest
     container_name: arch-btw-web
     ports:
-      - "4200:80"
+      - "5000:80"
     volumes:
-      - ./arch-btw.html:/app/index.html:ro
+      - ./arch-btw.html:/usr/share/nginx/html/index.html:ro
     restart: unless-stopped
     networks:
       - site-lively-frontend-network
