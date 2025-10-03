@@ -6,7 +6,7 @@ services:
     ports:
       - 4300:80
     volumes:
-      - ./arch-btw:/app
+      - ./arch-btw.html:/app/index.html
       - ./nginx.conf:/etc/nginx/nginx.conf
     networks:
       - site-lively-frontend-network
