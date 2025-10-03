@@ -1,0 +1,61 @@
+pipeline {
+    agent {
+        label 'build-01-win'
+    }
+
+    parameters {
+        string(name: 'Branch', defaultValue: 'master', description: 'Branch to release from')
+    }
+    environment {
+        GIT_REPO = 'git@github.com:noodlescripter/aliastron.git'
+        BRANCH = "${params.Branch}"
+        NPM_TOKEN = credentials('npm_dummy_token')
+    }
+    stages {
+        stage('Prepare Workspace') {
+            steps {
+                script {
+                    // Clean workspace and checkout branch
+                    git branch: "${BRANCH}", url: "${GIT_REPO}"
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Windows: use bat instead of sh
+                bat 'npm ci'
+            }
+        }
+    
+        stage('Preparing NPM access') {
+            steps {
+                script {
+                    // Write .npmrc with token
+                    writeFile file: '.npmrc', text: "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
+
+                    bat '''
+                        echo NPM access prepared
+                    '''
+                }
+            }
+        }
+
+        stage('Publishing to NPM') {
+            steps {
+                bat '''
+                    echo Publishing to NPM
+                    npm publish
+                '''
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Release process completed successfully!'
+        }
+        failure {
+            echo 'Release process failed. Check logs for details.'
+        }
+    }
+}
