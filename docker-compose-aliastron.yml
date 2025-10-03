@@ -1,18 +1,16 @@
 version: '3.8'
 
 services:
-  aliastron-web:
-    image: nginx:alpine
-    container_name: aliastron-web
+  arch-btw-aliastron-web:
+    image: nginx:latest
     ports:
-      - "5001:5001"
+      - 4300:80
     volumes:
-      - ./aliastron.html:/usr/share/nginx/html/index.html:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    restart: unless-stopped
+      - ./aliastron.html:/app
+      - ./nginx.conf:/etc/nginx/nginx.conf
     networks:
-      - aliastron-network-aliastron
+      - site-lively-frontend-network
 
 networks:
-  aliastron-network:
+  site-lively-frontend-network:
     driver: bridge
