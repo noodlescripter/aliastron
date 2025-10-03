@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'build-01-win'
+        any
     }
     parameters {
         string(name: 'Branch', defaultValue: 'master', description: 'Branch to release from')
