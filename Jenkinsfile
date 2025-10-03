@@ -3,20 +3,18 @@ pipeline {
         label 'build-01-win'
     }
     parameters {
-        string(name: 'Branch', defaultValue: 'main', description: 'Branch to release from')
+        string(name: 'Branch', defaultValue: 'master', description: 'Branch to release from')
     }
     environment {
         GIT_REPO = 'git@github.com:noodlescripter/aliastron.git'
         BRANCH = "${params.Branch}"
         NPM_TOKEN = credentials('npm_dummy_token')
-        PATH = "C:\\Program Files\\nodejs;${env.PATH}"  // Adjust path for your Windows node
     }
     stages {
         stage('Prepare Workspace') {
             steps {
                 script {
                     // Clean workspace
-                    cleanWs()
                     git branch: "${BRANCH}", url: "${GIT_REPO}"
                 }
             }
@@ -28,12 +26,6 @@ pipeline {
             }
         }
     
-        stage('Building package') {
-            steps {
-                // Run build script
-                bat 'npm run build'  // Changed from 'sh' to 'bat' for Windows
-            }
-        }
         stage('Preparing NPM access') {
             steps {
                 script {
@@ -46,15 +38,21 @@ pipeline {
                 }
             }
         }
+
+        stage('Publishing to NPM') {
+            steps {
+                sh '''
+                    echo "Publishing to NPM"
+                    npm publish
+                '''
+            }
+        }
     }
     post {
-        always {
-            // Always clean workspace
-            cleanWs()
-        }
         success {
             echo 'Release process completed successfully!'
         }
+
         failure {
             echo 'Release process failed. Check logs for details.'
         }
