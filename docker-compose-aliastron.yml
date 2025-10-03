@@ -3,13 +3,20 @@ version: '3.8'
 services:
   arch-btw-aliastron-web:
     image: nginx:latest
+    container_name: aliastron-web
     ports:
-      - 4300:80
+      - "4300:80"
     volumes:
-      - ./aliastron.html:/app/index.html
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./index.html:/app/index.html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
     networks:
       - site-lively-frontend-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   site-lively-frontend-network:
