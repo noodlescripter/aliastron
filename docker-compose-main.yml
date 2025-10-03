@@ -8,9 +8,4 @@ services:
     volumes:
       - ./arch-btw.html:/usr/share/nginx/html/index.html:ro
     restart: unless-stopped
-    networks:
-      - site-lively-frontend-network
-
-networks:
-  site-lively-frontend-network:
-    driver: bridge
+    network_mode: bridge
