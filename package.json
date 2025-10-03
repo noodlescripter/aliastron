@@ -1,6 +1,6 @@
 {
   "name": "aliastron",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "🚀 A beautiful, interactive CLI tool to manage Electron app aliases with style!",
   "main": "index.js",
   "type": "module",

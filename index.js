@@ -51,6 +51,18 @@ async function showBanner() {
       backgroundColor: '#1a1a2e'
     }
   ));
+  console.log(boxen(
+    chalk.yellow.bold('⚠️  Known Limitations\n\n') +
+    chalk.white('Facebook Messenger and WhatsApp Web won\'t work\n') +
+    chalk.gray('(thanks Zuck)')+ 
+    chalk.yellow('\n\I really meant FUCK YOU ZUCKERBERG!'),
+    {
+      padding: 1,
+      margin: 1,
+      borderStyle: 'round',
+      borderColor: 'yellow'
+    }
+  ));
 }
 
 // Ensure the include line exists in .bashrc
