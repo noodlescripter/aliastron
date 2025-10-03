@@ -12,12 +12,19 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
 import os from 'os';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const execAsync = promisify(exec);
 
 const BASHRC = path.join(os.homedir(), '.bashrc');
 const ALIASES_FILE = path.join(os.homedir(), '.electron-apps');
 const INCLUDE_LINE = '[ -f "$HOME/.electron-apps" ] && source "$HOME/.electron-apps"';
+
+// Get the path to the bundled Electron binary
+const ELECTRON_PATH = path.join(__dirname, 'node_modules', 'electron', 'dist', 'electron');
 
 // Beautiful gradient colors
 const coolGradient = gradient(['#FF6B6B', '#4ECDC4', '#45B7D1']);
@@ -27,12 +34,12 @@ const errorGradient = gradient(['#FF416C', '#FF4B2B']);
 // Display welcome banner
 async function showBanner() {
   console.clear();
-  const banner = figlet.textSync('Electron Manager', {
+  const banner = figlet.textSync('ALIASTRON', {
     font: 'ANSI Shadow',
     horizontalLayout: 'default',
     verticalLayout: 'default'
   });
-  
+
   console.log(coolGradient.multiline(banner));
   console.log(boxen(
     chalk.white.bold('🚀 Manage your Electron apps with style!'),
@@ -200,8 +207,8 @@ async function createAlias() {
       return !match || match[1] !== answers.name;
     });
 
-    // Add new alias
-    const newAlias = `alias ${answers.name}="/usr/lib/electron37/electron ${answers.url} > /dev/null 2>&1 &"`;
+    // Add new alias using the bundled Electron
+    const newAlias = `alias ${answers.name}="${ELECTRON_PATH} ${answers.url} > /dev/null 2>&1 &"`;
     lines.push(newAlias);
 
     await fs.writeFile(ALIASES_FILE, lines.join('\n') + '\n');
@@ -338,7 +345,7 @@ async function mainMenu() {
       break;
     case 'exit':
       console.log(boxen(
-        gradient.pastel.multiline('👋 Thanks for using Electron Manager!\n   See you next time!'),
+        gradient.pastel.multiline('👋 Thanks for using Aliastron!\n   See you next time!'),
         {
           padding: 1,
           margin: 1,
