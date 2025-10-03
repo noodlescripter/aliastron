@@ -1,0 +1,56 @@
+{
+  "name": "aliastron",
+  "version": "1.0.0",
+  "description": "🚀 A beautiful, interactive CLI tool to manage Electron app aliases with style!",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "aliastron": "./index.js",
+    "electron-manager": "./index.js",
+    "eam": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "keywords": [
+    "electron",
+    "cli",
+    "manager",
+    "aliases",
+    "terminal",
+    "interactive",
+    "electron-apps",
+    "bash",
+    "shell",
+    "command-line",
+    "productivity"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noodlescripter/aliastron.git"
+  },
+  "bugs": {
+    "url": "https://github.com/noodlescripter/aliastron/issues"
+  },
+  "homepage": "https://github.com/noodlescripter/aliastron#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "ora": "^7.0.1",
+    "boxen": "^7.1.1",
+    "gradient-string": "^2.0.2",
+    "figlet": "^1.7.0",
+    "cli-table3": "^0.6.3"
+  }
+}
